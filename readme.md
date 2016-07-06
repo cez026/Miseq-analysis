@@ -1,8 +1,9 @@
 ## MiSeq Analysis for HIV Deep Sequencing Paper
 
-The scripts contained in this repository were used in part to produce the
-results found in ["Deep sequencing of protease inhibitor resistance HIV patient
-isolates reveals patterns of correlated mutations in gag and protease"][1].
+The scripts contained in this repository were used in part to produce some or
+all of the results found in ["Deep sequencing of protease inhibitor resistance
+HIV patient isolates reveals patterns of correlated mutations in gag and
+protease"][1].
 
 ### Revisions
 
@@ -26,4 +27,4 @@ scripts herein have been cleaned of any analysis methods that invoke specific
 patient identifiers (anonymized ids and sample numbers) so that nothing is
 revealed.
 
-[1] http://dx.doi.org/10.1371/journal.pcbi.1004249
+[1]: http://dx.doi.org/10.1371/journal.pcbi.1004249
