@@ -1,0 +1,46 @@
+#!/bin/bash
+
+usage="-- creates paired-end .sam file from paired fastq files
+
+Usage: $(basename "$0") [-h] <in1.fa> <in2.fa> <ref.fa> 
+where:
+    -h 	show this help text
+"
+
+while getopts ':h' option; do
+    case "$option" in
+        h)  echo "$usage"
+            exit
+            ;;
+        ?)  printf "\nillegal option: '%s'\n" "$OPTARG" >&2
+            echo "$usage" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+expected_args=3
+if [ $# -ne $expected_args ]
+then
+    echo "$usage"
+    exit 1
+fi
+
+in1="$(readlink -f "$1")"
+in2="$(readlink -f "$2")"
+in1name="${in1%.*}"
+in2name="${in2%.*}"
+aln1="$in1name-aln.sai"
+aln2="$in2name-aln.sai"
+sam="$in1name-BWA-PAIRED.sam"
+
+exec &> ""$0".log"
+
+echo "Indexing..."
+/home/wflynn/tools/bwa-0.6.2/bwa index -a is $3
+echo "Aligning reads..."
+/home/wflynn/tools/bwa-0.6.2/bwa aln -R 100 $3 $1 > $aln1 
+/home/wflynn/tools/bwa-0.6.2/bwa aln -R 100 $3 $2 > $aln2
+echo "Mapping reads..."
+/home/wflynn/tools/bwa-0.6.2/bwa sampe -o 200000 $3 $aln1 $aln2 $1 $2 > $sam
